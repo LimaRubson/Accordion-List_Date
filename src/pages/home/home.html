@@ -1,14 +1,28 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Accordion List Date
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-list>
+    <ion-list-header *ngFor="let item of bienal; let i = index" no-lines no-padding>
+      <button text-wrap ion-item (click)="toggleSection(i)" detail-none [ngClass]="{'section-active': item.status, 'section': !item.status }">
+        <ion-icon item-left name="ios-arrow-forward" *ngIf="!item.status"></ion-icon>
+        <ion-icon item-left name="ios-arrow-down" *ngIf="item.status"></ion-icon>
+        {{ item.name }}
+      </button>
+  
+        <ion-list *ngIf="item.children && item.status" no-lines>
+          <ion-list-header *ngFor="let child of item.children" no-padding>
+            <ion-item *ngIf="!child.children" detail-none text-wrap>
+              <h2><b>{{ child.time }} :</b>{{ child.name }}</h2>
+              <p>{{ child.agendas }}</p>
+            </ion-item>
+          </ion-list-header>
+        </ion-list>
+    </ion-list-header>
+  </ion-list>
 </ion-content>
